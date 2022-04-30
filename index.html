@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<style type="text/css">
+		.mole {
+			height: 150px;
+			position:  absolute;
+			width: 100px;
+			background-image: url(png2.png);
+			background-size: 100% 100%;
+		}
+		.nora {
+			position: absolute;
+			height: 200px;
+			width: 200px;
+			background-image: url(png1.webp);
+			background-size: 100% 100%;
+		}
+	</style>
+</head>
+<body class="bg-warning">
+	<div style="display: flex;">
+	<h1>Счёт:<span class="score">0</span></h1>
+	<button class="btn" style="position: absolute; left: 200px; top: 10px; background: orange;">Начать</button>
+    </div>
+    <h1>Время:<span class="time">20</span></h1>
+
+<!-- дивы норы чтобы появится -->
+<div class="bg-warning prop nora" style="top: 200px; left: 200px"></div>
+<div class="bg-warning prop nora" style="top: 200px; left: 500px"></div>
+<div class="bg-warning prop nora" style="top: 200px; left: 800px"></div>
+
+<div class="bg-warning prop nora" style="top: 600px; left: 200px"></div>
+<div class="bg-warning prop nora" style="top: 600px; left: 500px"></div>
+<div class="bg-warning prop nora" style="top: 600px; left: 800px"></div>
+
+
+<script type="text/javascript">
+	let btn = document.querySelector(".btn");
+	let score = document.querySelector(".score");
+	let time = document.querySelector(".time");
+	number = 0
+	number2 = 20
+
+	let random = function(arg) {
+		let random = Math.random() * arg;
+		let round = Math.round(random);
+		return round;
+	}
+
+	    let leftPos = [275,575,875]
+	    let topPos = [200,600];
+	    let name = ["good","good","bad"];
+
+	let createMole = function() {
+
+		let nora= document.querySelector(".nora");
+        let box = document.createElement('div');
+	    document.body.appendChild(box);
+	    box.classList.add("mole");
+	    nora.before(box);
+	    box.style.top = topPos[random(1)] + "px";
+	    box.style.left = leftPos[random(2)] + "px";
+	    box.style.transition = "1s"
+	    box.name = name[random(2)]
+
+	    if(box.name=="good") {
+	    	box.style.backgroundImage = "url(png2.png)"
+	    } else {
+	    	box.style.backgroundImage = "url(png3.png)"
+	    }
+	    
+
+	    let show = function() {
+	    	if(box.style.top=="200px") {
+	    		box.style.top = "50px"
+	    	} 
+	    	if (box.style.top=="600px") {
+	    		box.style.top = "450px"
+	    	}
+	    }
+
+	    setTimeout(show,1000)
+
+	    let glim = function() {
+	    	if (box.style.top=="450px") {
+	    		box.style.top = "600px"
+	    	}
+	    	if (box.style.top=="50px") {
+	    		box.style.top = "200px"
+	    	}
+	    }
+
+	    setTimeout(glim,1500)
+
+	    box.onclick = function() {
+	    	box.style.display = "none"
+	    	if(box.name=="good") {
+	    		number = number + 1
+	    	} else {
+	    		number = number + 2
+	    	}
+	    	console.log(number)
+	    	score.innerHTML = number
+	    }
+	}
+	btn.onclick = function() {
+		btn.style.display = "none";
+	    let spawner = setInterval(createMole,1000);
+
+	    let timer = function() {
+	    	number2 = number2 - 1
+	    	time.innerHTML = number2
+	    }
+
+	    let timer2 = setInterval(timer,1000);
+
+	    let over = function() {
+		    clearInterval(spawner,);
+		    clearInterval(timer2,);
+		    if (number>=18) {
+		    	alert("Победа, хэдкрабы побеждены")
+		    } 
+		    if (number<=17) {
+		    	alert("Вы стали зомби")
+		    }
+	    }
+
+	    setTimeout(over,20000,);
+    }
+
+	/*
+	функция создатель кротов = {
+		функция рандомайзера = {}
+
+		массив позиция лефт = [500,700,900]
+
+		создаём див-крот
+		параметры
+		транзишн
+		спавн
+		див-крот топ = 100
+		див-крот дефт = позиция лефт[рандомайзер(2)]
+		див-крот имя = имя[рандомайзер(1)]
+
+		если(див-крот имя==хороший) {
+			зеленый
+		} else {
+			красный
+		}
+		функция показать = {
+			див-крот топ = 50
+		}
+
+		таймаут(показать,1000)
+
+		функция скрыть = {
+			див-крот топ = 100
+		}
+
+		таймаут(скрыть,2000)
+
+		нажатие = {
+			ксли хороший {
+				очкп плюс
+			} else {
+				очки минус
+			}
+		}
+	}
+	интервал(создатель кротов, 1000)
+	*/
+</script>
+</body>
+</html>
